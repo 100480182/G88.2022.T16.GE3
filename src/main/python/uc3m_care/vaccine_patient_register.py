@@ -13,6 +13,7 @@ class VaccinePatientRegister:
         self.__age = age
         justnow = datetime.utcnow()
         self.__time_stamp = datetime.timestamp(justnow)
+        self.__time_stamp = 1646325827.425465
 
     def __str__(self):
         return "VaccinePatientRegister:" + json.dumps(self.__dict__)
