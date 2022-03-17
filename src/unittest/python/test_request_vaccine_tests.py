@@ -53,8 +53,7 @@ class MyTestCase(unittest.TestCase):
     def test_TEST_PATIENT_ID_ECNV1(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
-            # change the value of the attributes according to your
-            # test case
+            # ID is not a UUID
             self.patient_id = "HELLO WORLD"
             my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                           registration_type=self.registration_type,
@@ -66,8 +65,7 @@ class MyTestCase(unittest.TestCase):
     def test_TEST_PATIENT_ID_ECNV2(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
-            # change the value of the attributes according to your
-            # test case
+            # ID is a non-v4 UUID
             self.patient_id = "e19cca80-bb93-32aa-ab0f-780b0caa7d46"
             my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                           registration_type=self.registration_type,
@@ -79,8 +77,7 @@ class MyTestCase(unittest.TestCase):
     def test_TEST_PATIENT_ID_ECNV3(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
-            # change the value of the attributes according to your
-            # test case
+            # ID not a string
             self.patient_id = 1
             my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                           registration_type=self.registration_type,
@@ -88,6 +85,103 @@ class MyTestCase(unittest.TestCase):
                                                           phone_number=self.phone_number,
                                                           age=self.age)
         self.assertEqual("patient_id must be a string value", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV4(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # ID is empty
+            self.patient_id = ""
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("Id received is not a UUID", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV5(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # REGSITRATION_TYPE invalid
+            self.registration_type = "REGULA"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV6(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # REGSITRATION_TYPE empty
+            self.registration_type = 1
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("registration_type must be a string value", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV7(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # REGSITRATION_TYPE empty
+            self.registration_type = ""
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV8(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # REGSITRATION_TYPE empty
+            self.registration_type = ""
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV9(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # NAME_SURNAME has more than 30 characters
+            self.registration_type = "JOSEJOSEJOSEJOSE LOPEZLOPEZLOPEZ"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("name_surname must be less than 30 characters", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV10(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # NAME_SURNAME has no space
+            self.registration_type = "JOSE"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("name_surname must have at least one space", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV11(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # NAME_SURNAME has only spaces
+            self.registration_type = "   "
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("name_surname must have two strings", cm.exception.message)
+
 
 if __name__ == '__main__':
     unittest.main()

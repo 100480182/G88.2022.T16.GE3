@@ -38,13 +38,23 @@ class VaccineManager:
             raise VaccineManagementException("Id received is not a UUID") from e
         return True
 
+    @staticmethod
+    def validate_registration_type(registration_type):
+        if not isinstance(registration_type, str):
+            raise VaccineManagementException("registration_type must be a string value")
+        if not registration_type.upper() == "REGULAR" or registration_type.upper() == "FAMILY":
+            raise VaccineManagementException("registration_type must be either \"REGULAR\" or \"FAMILY\"")
+        return True
+
+
+
     def request_vaccination_id(self,
                                patient_id,
                                registration_type,
                                name_surname,
                                phone_number,
                                age):
-        if self.validate_guid(patient_id): # add methods to validate registration_type, name_surname, phone_number, age
+        if self.validate_guid(patient_id) and self.validate_registration_type(registration_type): # add methods to validate registration_type, name_surname, phone_number, age
             my_reg = VaccinePatientRegister(patient_id=patient_id,
                                             registration_type=registration_type,
                                             full_name=name_surname,
