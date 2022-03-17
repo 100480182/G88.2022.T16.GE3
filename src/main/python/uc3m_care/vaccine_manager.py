@@ -39,13 +39,26 @@ class VaccineManager:
         return True
 
     @staticmethod
-    def validate_registration_type(registration_type):
+    def validate_reg_type(registration_type):
         if not isinstance(registration_type, str):
             raise VaccineManagementException("registration_type must be a string value")
         if not registration_type.upper() == "REGULAR" or registration_type.upper() == "FAMILY":
             raise VaccineManagementException("registration_type must be either \"REGULAR\" or \"FAMILY\"")
         return True
 
+    @staticmethod
+    def validate_name(name_surname):
+        if not isinstance(name_surname, str):
+            raise VaccineManagementException("name_surname must be a string value")
+        if len(name_surname) > 30:
+            raise VaccineManagementException("name_surname must be less than 30 characters")
+        if name_surname.strip() != name_surname:
+            raise VaccineManagementException("name_surname may not have leading or trailing spaces")
+        try:
+            name_surname.strip().index(" ")
+        except ValueError:
+            raise VaccineManagementException("name_surname must have at least one space")
+        return True
 
 
     def request_vaccination_id(self,
@@ -54,7 +67,8 @@ class VaccineManager:
                                name_surname,
                                phone_number,
                                age):
-        if self.validate_guid(patient_id) and self.validate_registration_type(registration_type): # add methods to validate registration_type, name_surname, phone_number, age
+        if self.validate_guid(patient_id) and self.validate_reg_type(registration_type) and \
+                self.validate_name(name_surname):
             my_reg = VaccinePatientRegister(patient_id=patient_id,
                                             registration_type=registration_type,
                                             full_name=name_surname,

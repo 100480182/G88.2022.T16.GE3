@@ -134,23 +134,12 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
 
+
     def test_TEST_PATIENT_ID_ECNV8(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
-            # REGSITRATION_TYPE empty
-            self.registration_type = ""
-            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
-                                                          registration_type=self.registration_type,
-                                                          name_surname=self.name_surname,
-                                                          phone_number=self.phone_number,
-                                                          age=self.age)
-        self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
-
-    def test_TEST_PATIENT_ID_ECNV9(self):
-        with self.assertRaises(VaccineManagementException) as cm:
-            my_manager = VaccineManager()
             # NAME_SURNAME has more than 30 characters
-            self.registration_type = "JOSEJOSEJOSEJOSE LOPEZLOPEZLOPEZ"
+            self.name_surname = "JOSEJOSEJOSEJOSE LOPEZLOPEZLOPEZ"
             my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                           registration_type=self.registration_type,
                                                           name_surname=self.name_surname,
@@ -158,11 +147,11 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("name_surname must be less than 30 characters", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV10(self):
+    def test_TEST_PATIENT_ID_ECNV9(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME has no space
-            self.registration_type = "JOSE"
+            self.name_surname = "JOSE"
             my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                           registration_type=self.registration_type,
                                                           name_surname=self.name_surname,
@@ -170,17 +159,42 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("name_surname must have at least one space", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV11(self):
+    def test_TEST_PATIENT_ID_ECNV10(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME has only spaces
-            self.registration_type = "   "
+            self.name_surname = "   "
             my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                           registration_type=self.registration_type,
                                                           name_surname=self.name_surname,
                                                           phone_number=self.phone_number,
                                                           age=self.age)
-        self.assertEqual("name_surname must have two strings", cm.exception.message)
+        self.assertEqual("name_surname may not have leading or trailing spaces", cm.exception.message)
+
+
+    def test_TEST_PATIENT_ID_ECNV11(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # NAME_SURNAME is not a string
+            self.name_surname = 1
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("name_surname must be a string value", cm.exception.message)
+
+    def test_TEST_PATIENT_ID_ECNV12(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # NAME_SURNAME is an empty string
+            self.name_surname = ""
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("name_surname must have at least one space", cm.exception.message)
 
 
 if __name__ == '__main__':
