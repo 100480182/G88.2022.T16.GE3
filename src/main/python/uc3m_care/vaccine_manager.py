@@ -51,7 +51,7 @@ class VaccineManager:
         if not isinstance(name_surname, str):
             raise VaccineManagementException("name_surname must be a string value")
         if len(name_surname) > 30:
-            raise VaccineManagementException("name_surname must be less than 30 characters")
+            raise VaccineManagementException("name_surname must be 30 characters or less")
         if name_surname.strip() != name_surname:
             raise VaccineManagementException("name_surname may not have leading or trailing spaces")
         try:

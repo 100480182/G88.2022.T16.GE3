@@ -145,7 +145,7 @@ class MyTestCase(unittest.TestCase):
                                                           name_surname=self.name_surname,
                                                           phone_number=self.phone_number,
                                                           age=self.age)
-        self.assertEqual("name_surname must be less than 30 characters", cm.exception.message)
+        self.assertEqual("name_surname must be 30 characters or less", cm.exception.message)
 
     def test_TEST_PATIENT_ID_ECNV9(self):
         with self.assertRaises(VaccineManagementException) as cm:
