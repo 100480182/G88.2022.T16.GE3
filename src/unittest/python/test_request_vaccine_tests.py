@@ -41,7 +41,7 @@ class MyTestCase(unittest.TestCase):
                                                       name_surname=self.name_surname,
                                                       phone_number=self.phone_number,
                                                       age=self.age)
-        self.assertEqual("ecc7f631f98930aca6e183c6e505dc45", my_result)
+        self.assertEqual("2e7ba4f8fc1936352c06a3f200720546", my_result)
         # check that the values has been stored into the file
         found_file = False
         patient_registry_data = TestUtils.read_json_file(TestUtils.patient_registry)
@@ -76,6 +76,18 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("Invalid UUID v4 format", cm.exception.message)
 
+    def test_TEST_PATIENT_ID_ECNV3(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # change the value of the attributes according to your
+            # test case
+            self.patient_id = 1
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("patient_id must be a string value", cm.exception.message)
 
 if __name__ == '__main__':
     unittest.main()

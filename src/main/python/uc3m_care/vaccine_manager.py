@@ -44,7 +44,7 @@ class VaccineManager:
                                name_surname,
                                phone_number,
                                age):
-        if self.validate_guid(patient_id):
+        if self.validate_guid(patient_id): # add methods to validate registration_type, name_surname, phone_number, age
             my_reg = VaccinePatientRegister(patient_id=patient_id,
                                             registration_type=registration_type,
                                             full_name=name_surname,
