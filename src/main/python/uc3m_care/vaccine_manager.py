@@ -60,6 +60,27 @@ class VaccineManager:
             raise VaccineManagementException("name_surname must have at least one space")
         return True
 
+    @staticmethod
+    def validate_phone_number(phone_number):
+        if not isinstance(phone_number, int):
+            raise VaccineManagementException("phone_number must not contain letters or symbols")
+        if len(str(phone_number)) > 9:
+            raise VaccineManagementException("phone_number must be not more than 9 digits long")
+        if len(str(phone_number)) < 9:
+            raise VaccineManagementException("phone_number must be not be shorter than 9 digits long")
+        return True
+
+    @staticmethod
+    def validate_age(age):
+        if not isinstance(age, int):
+            raise VaccineManagementException("phone_number must be a number only, with no decimal points")
+        if age > 125:
+            raise VaccineManagementException("age must not exceed 125")
+        if age < 6:
+            raise VaccineManagementException("age must be 6 and older")
+        if len(str(age)) == 0:
+            raise VaccineManagementException("age is a mandatory field")
+        return True
 
     def request_vaccination_id(self,
                                patient_id,
