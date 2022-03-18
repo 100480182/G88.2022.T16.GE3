@@ -42,7 +42,7 @@ class VaccineManager:
     def validate_reg_type(registration_type):
         if not isinstance(registration_type, str):
             raise VaccineManagementException("registration_type must be a string value")
-        if not registration_type.upper() == "REGULAR" or registration_type.upper() == "FAMILY":
+        if not (registration_type.upper() == "REGULAR" or registration_type.upper() == "FAMILY"):
             raise VaccineManagementException("registration_type must be either \"REGULAR\" or \"FAMILY\"")
         return True
 
@@ -60,6 +60,30 @@ class VaccineManager:
             raise VaccineManagementException("name_surname must have at least one space")
         return True
 
+    @staticmethod
+    def validate_phone_number(phone_number):
+        if not isinstance(phone_number, str):
+            raise VaccineManagementException("phone_number must be a string")
+        if len(phone_number) > 12:
+            raise VaccineManagementException("phone_number must be no more than 9 digits")
+        if len(phone_number) < 12:
+            raise VaccineManagementException("phone_number must not be shorter than 9 digits")
+        if not phone_number[1:].isdigit():
+            raise VaccineManagementException("phone_number must contain only digits")
+        if phone_number[0:3] != "+34":
+            raise VaccineManagementException("phone_number must begin with +34")
+        return True
+
+    @staticmethod
+    def validate_age(age):
+        if not isinstance(age, int):
+            raise VaccineManagementException("age must be an integer")
+        if age > 125:
+            raise VaccineManagementException("age must not exceed 125")
+        if age < 6:
+            raise VaccineManagementException("age must be 6 and older")
+        return True
+
 
     def request_vaccination_id(self,
                                patient_id,
@@ -68,7 +92,8 @@ class VaccineManager:
                                phone_number,
                                age):
         if self.validate_guid(patient_id) and self.validate_reg_type(registration_type) and \
-                self.validate_name(name_surname):
+                self.validate_name(name_surname) and self.validate_phone_number(phone_number) and \
+                self.validate_age(age):
             my_reg = VaccinePatientRegister(patient_id=patient_id,
                                             registration_type=registration_type,
                                             full_name=name_surname,

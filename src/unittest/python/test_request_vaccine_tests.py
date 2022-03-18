@@ -34,7 +34,7 @@ class MyTestCase(unittest.TestCase):
         self.phone_number = "+34123456789"
         self.age = 21
 
-    def test_TEST_PATIENT_ID_ECV1(self):
+    def test_TEST_ECV1(self):
         my_manager = VaccineManager()
         my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
                                                       registration_type=self.registration_type,
@@ -42,6 +42,23 @@ class MyTestCase(unittest.TestCase):
                                                       phone_number=self.phone_number,
                                                       age=self.age)
         self.assertEqual("2e7ba4f8fc1936352c06a3f200720546", my_result)
+        # check that the values has been stored into the file
+        found_file = False
+        patient_registry_data = TestUtils.read_json_file(TestUtils.patient_registry)
+        for patient in patient_registry_data:
+            if patient["_VaccinePatientRegister__patient_id"] == self.patient_id:
+                found_file = True
+        self.assertTrue(found_file)
+
+    def test_TEST_ECV2(self):
+        my_manager = VaccineManager()
+        self.registration_type = "FAMILY"
+        my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                      registration_type=self.registration_type,
+                                                      name_surname=self.name_surname,
+                                                      phone_number=self.phone_number,
+                                                      age=self.age)
+        self.assertEqual("7944221369d4195e9e74f5aca8c32a50", my_result)
         # check that the values has been stored into the file
         found_file = False
         patient_registry_data = TestUtils.read_json_file(TestUtils.patient_registry)
@@ -98,7 +115,7 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("Id received is not a UUID", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV5(self):
+    def test_TEST_REG_TYPE_ECNV5(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # REGSITRATION_TYPE invalid
@@ -110,7 +127,7 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV6(self):
+    def test_TEST_REG_TYPE_ECNV6(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # REGSITRATION_TYPE empty
@@ -122,7 +139,7 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("registration_type must be a string value", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV7(self):
+    def test_TEST_REG_TYPE_ECNV7(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # REGSITRATION_TYPE empty
@@ -135,7 +152,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual("registration_type must be either \"REGULAR\" or \"FAMILY\"", cm.exception.message)
 
 
-    def test_TEST_PATIENT_ID_ECNV8(self):
+    def test_TEST_NAME_ECNV8(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME has more than 30 characters
@@ -147,7 +164,7 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("name_surname must be 30 characters or less", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV9(self):
+    def test_TEST_NAME_ECNV9(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME has no space
@@ -159,7 +176,7 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("name_surname must have at least one space", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV10(self):
+    def test_TEST_NAME_ECNV10(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME has only spaces
@@ -172,7 +189,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual("name_surname may not have leading or trailing spaces", cm.exception.message)
 
 
-    def test_TEST_PATIENT_ID_ECNV11(self):
+    def test_TEST_NAME_ECNV11(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME is not a string
@@ -184,7 +201,7 @@ class MyTestCase(unittest.TestCase):
                                                           age=self.age)
         self.assertEqual("name_surname must be a string value", cm.exception.message)
 
-    def test_TEST_PATIENT_ID_ECNV12(self):
+    def test_TEST_NAME_ECNV12(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             # NAME_SURNAME is an empty string
@@ -195,6 +212,102 @@ class MyTestCase(unittest.TestCase):
                                                           phone_number=self.phone_number,
                                                           age=self.age)
         self.assertEqual("name_surname must have at least one space", cm.exception.message)
+
+    def test_TEST_PHONE_NUMBER_ECNV13(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # PHONE_NUMBER not in string format
+            self.phone_number = 341234567899
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("phone_number must be a string", cm.exception.message)
+
+    def test_TEST_PHONE_NUMBER_ECNV14(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # PHONE_NUMBER longer than 9 digits
+            self.phone_number = "+341234567899"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("phone_number must be no more than 9 digits", cm.exception.message)
+
+    def test_TEST_PHONE_NUMBER_ECNV15(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # PHONE_NUMBER shorter than 9 digits
+            self.phone_number = "+3412345678"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("phone_number must not be shorter than 9 digits", cm.exception.message)
+
+    def test_TEST_PHONE_NUMBER_ECNV16(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # PHONE_NUMBER has letters
+            self.phone_number = "+34abc456789"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("phone_number must contain only digits", cm.exception.message)
+
+    def test_TEST_PHONE_NUMBER_ECNV17(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # PHONE_NUMBER doesn't begin with Spanish country code (+34)
+            self.phone_number = "+11123456789"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("phone_number must begin with +34", cm.exception.message)
+
+    def test_TEST_AGE_ECNV18(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # AGE less than 6
+            self.age = 5
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("age must be 6 and older", cm.exception.message)
+
+    def test_TEST_AGE_ECNV19(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # AGE greater than 125
+            self.age = 126
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("age must not exceed 125", cm.exception.message)
+
+    def test_TEST_AGE_ECNV20(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            # AGE is not an integer
+            self.age = "1e"
+            my_result = my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                                          registration_type=self.registration_type,
+                                                          name_surname=self.name_surname,
+                                                          phone_number=self.phone_number,
+                                                          age=self.age)
+        self.assertEqual("age must be an integer", cm.exception.message)
 
 
 if __name__ == '__main__':
