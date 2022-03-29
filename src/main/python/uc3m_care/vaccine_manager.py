@@ -3,6 +3,8 @@ from .vaccine_patient_register import VaccinePatientRegister
 from .vaccine_management_exception import VaccineManagementException
 import uuid
 import json
+from pathlib import Path
+import os
 
 
 class VaccineManager:
@@ -10,8 +12,12 @@ class VaccineManager:
 
     # FOLDER FOR SAVING & READING THE JSON FILES
     # ../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    json_store = "../../../json/db"
-    json_collection = "../../../json/collection"
+    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
+    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
+
+    # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
+    # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
+
 
     # FILES WHERE THE INFO WILL BE STORED
     patient_registry = json_store + "/patient_registry.json"
@@ -118,3 +124,6 @@ class VaccineManager:
                     json.dump(data, file, indent=2)
 
             return my_reg.patient_system_id
+
+    def get_vaccine_date(self, test_file):
+        pass

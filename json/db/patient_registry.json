@@ -1,0 +1,11 @@
+[
+  {
+    "_VaccinePatientRegister__patient_id": "e19cca80-bb93-42aa-ab0f-780b0caa7d46",
+    "_VaccinePatientRegister__full_name": "JOSE LOPEZ",
+    "_VaccinePatientRegister__registration_type": "REGULAR",
+    "_VaccinePatientRegister__phone_number": "+34123456789",
+    "_VaccinePatientRegister__age": 21,
+    "_VaccinePatientRegister__time_stamp": 1646325827.425465,
+    "_VaccinePatientRegister__patient_system_id": "2e7ba4f8fc1936352c06a3f200720546"
+  }
+]

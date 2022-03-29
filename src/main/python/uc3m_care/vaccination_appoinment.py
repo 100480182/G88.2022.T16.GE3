@@ -13,12 +13,14 @@ class VaccinationAppoinment():
         self.__phone_number = patient_phone_number
         justnow = datetime.utcnow()
         self.__issued_at = datetime.timestamp(justnow)
+
         if days == 0:
             self.__appoinment_date = 0
         else:
             #timestamp is represneted in seconds.microseconds
             #age must be expressed in senconds to be added to the timestap
             self.__appoinment_date = self.__issued_at + (days * 24 * 60 * 60)
+        self.__vaccination_signature = hashlib.sha256(self.__signature_string().encode()).hexdigest()
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
