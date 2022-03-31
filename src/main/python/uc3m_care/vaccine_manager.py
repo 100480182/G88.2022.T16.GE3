@@ -125,5 +125,9 @@ class VaccineManager:
 
             return my_reg.patient_system_id
 
-    def get_vaccine_date(self, test_file):
+    def get_vaccine_date(self, input_file):
+        # check if valid format
+        # get appropriate json file from patient_registry.json
+        # return hex string SHA256 thing [hashlib.sha256(self.__signature_string().encode()).hexdigest()]
+        # in case of error, VaccineManagementException
         pass
