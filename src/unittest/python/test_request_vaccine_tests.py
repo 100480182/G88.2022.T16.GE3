@@ -23,7 +23,8 @@ class MyTestCase(unittest.TestCase):
         # PLEASE COMMENT THE SENTENCE BELOW
         # AND AT THE END OF THE TESTS YOU CAN TAKE A LOOK AT THE CONTENT
         # tearDownClass IS EXECUTED AT THE END OF THE PROCESS
-        TestUtils.cleanup_all_folders()
+        # TestUtils.cleanup_all_folders()
+        pass
 
 
     def setUp(self) -> None:

@@ -8,8 +8,11 @@ class TestUtils:
     """Test setup for the Python unittest module."""
     # FOLDER FOR SAVING & READING THE JSON FILES
     #../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    json_store = "../../../json/db"
-    json_collection = "../../../json/collection"
+    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
+    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
+
+    # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
+    # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
 
     patient_registry = json_store + "/patient_registry.json"
     vaccination_appointments = json_store + "/vaccination_appointments.json"

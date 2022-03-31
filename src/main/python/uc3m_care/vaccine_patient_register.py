@@ -11,9 +11,10 @@ class VaccinePatientRegister:
         self.__registration_type = registration_type
         self.__phone_number = phone_number
         self.__age = age
-        justnow = datetime.utcnow()
-        self.__time_stamp = datetime.timestamp(justnow)
+        # justnow = datetime.utcnow()
+        # self.__time_stamp = datetime.timestamp(justnow)
         self.__time_stamp = 1646325827.425465
+        self.__patient_system_id = hashlib.md5(self.__str__().encode()).hexdigest()
 
     def __str__(self):
         return "VaccinePatientRegister:" + json.dumps(self.__dict__)
@@ -60,7 +61,8 @@ class VaccinePatientRegister:
     @property
     def patient_system_id( self ):
         """Returns the md5 signature"""
-        return hashlib.md5(self.__str__().encode()).hexdigest()
+        # return hashlib.md5(self.__str__().encode()).hexdigest()
+        return self.__patient_system_id
 
     @property
     def patient_age( self ):
