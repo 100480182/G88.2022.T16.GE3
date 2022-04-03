@@ -197,4 +197,3 @@ class VaccineManager:
         # return hex string SHA256 thing [hashlib.sha256(self.__signature_string().encode()).hexdigest()]
         # check sha256
         # in case of error, VaccineManagementException
-        pass
