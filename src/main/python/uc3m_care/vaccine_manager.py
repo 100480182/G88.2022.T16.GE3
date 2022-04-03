@@ -1,6 +1,7 @@
 """Module """
 from .vaccine_patient_register import VaccinePatientRegister
 from .vaccine_management_exception import VaccineManagementException
+from .vaccination_appoinment import VaccinationAppoinment
 import uuid
 import json
 from pathlib import Path
@@ -126,8 +127,74 @@ class VaccineManager:
             return my_reg.patient_system_id
 
     def get_vaccine_date(self, input_file):
-        # check if valid format
+        # read input file
+        try:
+            with open("../../../jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+                apptReq = json.load(file)
+            # check valid format
+            if not apptReq:
+                raise VaccineManagementException("appointment request file empty")
+        except FileNotFoundError as ex:
+            raise VaccineManagementException("appointment request file not found")
+
         # get appropriate json file from patient_registry.json
+        systemID = apptReq["PatientSystemID"]
+        phoneNumber = apptReq["ContactPhoneNumber"]
+
+        try:
+            with open(self.patient_registry, "r", encoding="utf-8") as file:
+                patientRegistry = json.load(file)
+            patientFound = False
+            for patient in patientRegistry:
+                if systemID == patient["_VaccinePatientRegister__patient_system_id"]:
+                    patientFound = True
+                    registered = VaccinePatientRegister(patient_id=patient["_VaccinePatientRegister__patient_id"],
+                                                        registration_type=patient[
+                                                            "_VaccinePatientRegister__registration_type"],
+                                                        full_name=patient["_VaccinePatientRegister__full_name"],
+                                                        phone_number=patient["_VaccinePatientRegister__phone_number"],
+                                                        age=patient["_VaccinePatientRegister__age"])
+
+            if not patientFound:
+                raise VaccineManagementException("patient not found in registry")
+
+            # generate sha256 with hexdigest from patient data, compare to stored sha256 (patient system id)
+            storedSystemID = registered.patient_system_id()
+            storedPhoneNumber = registered.phone_number()
+            if not systemID == storedSystemID:
+                raise VaccineManagementException("system ID does not match data stored in register")
+            if not phoneNumber == storedPhoneNumber:
+                raise VaccineManagementException("phone number does not match number in register")
+
+            patientID = registered.patient_id()
+
+            new_appointment = VaccinationAppoinment(guid=patientID,
+                                                    patient_sys_id= systemID,
+                                                    patient_phone_number=phoneNumber,
+                                                    days=10)
+
+            # add appointment to file, creating the file first if necessary
+            try:
+                # if file does not exist store the first item
+                with open(self.vaccination_appointments, "x", encoding="utf-8", newline="") as file:
+                    data = [self.__dict__]
+                    json.dump(data, file, indent=2)
+            except FileExistsError as ex:
+                # if file exists, load the data, append the new item and save it all
+                with open(self.vaccination_appointments, "r", encoding="utf-8") as file:
+                    # LOAD THE DATA
+                    data = json.load(file)
+                    # APPEND THE NEW APPOINTMENT
+                    data.append(new_appointment.__dict__)
+                # Overwrite the data
+                with open(self.vaccination_appointments, "w", encoding="utf-8", newline="") as file:
+                    json.dump(data, file, indent=2)
+
+        except FileNotFoundError as ex:
+            raise VaccineManagementException("patient registry file not found")
+
+
         # return hex string SHA256 thing [hashlib.sha256(self.__signature_string().encode()).hexdigest()]
+        # check sha256
         # in case of error, VaccineManagementException
         pass
