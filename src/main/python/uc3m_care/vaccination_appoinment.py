@@ -11,8 +11,9 @@ class VaccinationAppoinment():
         self.__patient_id = guid
         self.__patient_sys_id = patient_sys_id
         self.__phone_number = patient_phone_number
-        justnow = datetime.utcnow()
-        self.__issued_at = datetime.timestamp(justnow)
+        # justnow = datetime.utcnow()
+        # self.__issued_at = datetime.timestamp(justnow)
+        self.__issued_at= 1649065727.244346
 
         if days == 0:
             self.__appoinment_date = 0
@@ -24,7 +25,7 @@ class VaccinationAppoinment():
 
     def __signature_string(self):
         """Composes the string to be used for generating the key for the date"""
-        return "{alg:" + self.__alg +",typ:" + self.__type +",patient_sys_id:" + self.__patient_sys_id + ",issuedate:" + self.__issued_at + ",vaccinationtiondate:" + self.__appoinment_date + "}"
+        return "{alg:" + self.__alg +",typ:" + self.__type +",patient_sys_id:" + self.__patient_sys_id + ",issuedate:" + str(self.__issued_at) + ",vaccinationtiondate:" + str(self.__appoinment_date) + "}"
 
     @property
     def patient_id( self ):

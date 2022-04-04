@@ -13,11 +13,11 @@ class VaccineManager:
 
     # FOLDER FOR SAVING & READING THE JSON FILES
     # ../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
-    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
+    #json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
+    #json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
 
-    # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
-    # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
+    json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
+    json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
 
 
     # FILES WHERE THE INFO WILL BE STORED
@@ -129,13 +129,16 @@ class VaccineManager:
     def get_vaccine_date(self, input_file):
         # read input file
         try:
-            with open("../../../jsonfiles/" + input_file, "r", encoding="utf-8") as file:
-                apptReq = json.load(file)
+            #with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+            with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+                apptReq = json.load(file) # CAN THROW EXCEPTION!!
+
+
             # check valid format
-            if not apptReq:
-                raise VaccineManagementException("appointment request file empty")
-        except FileNotFoundError as ex:
-            raise VaccineManagementException("appointment request file not found")
+            # if not apptReq:
+            #     raise VaccineManagementException("appointment request file empty")
+        except json.decoder.JSONDecodeError as ex:
+            raise VaccineManagementException("appointment request file empty")
 
         systemID = apptReq["PatientSystemID"]
         phoneNumber = apptReq["ContactPhoneNumber"]
@@ -159,15 +162,15 @@ class VaccineManager:
                 raise VaccineManagementException("patient not found in registry")
 
             # generate sha256 with hexdigest from patient data, compare to stored sha256 (patient system id)
-            storedSystemID = registered.patient_system_id()
-            storedPhoneNumber = registered.phone_number()
+            storedSystemID = registered.patient_system_id
+            storedPhoneNumber = registered.phone_number
             if not systemID == storedSystemID:
                 raise VaccineManagementException("system ID does not match data stored in register")
             if not phoneNumber == storedPhoneNumber:
                 raise VaccineManagementException("phone number does not match number in register")
 
             # get patient guid to make appointment
-            patientID = registered.patient_id()
+            patientID = registered.patient_id
 
             new_appointment = VaccinationAppoinment(guid=patientID,
                                                     patient_sys_id= systemID,
@@ -190,6 +193,8 @@ class VaccineManager:
                 # Overwrite the data
                 with open(self.vaccination_appointments, "w", encoding="utf-8", newline="") as file:
                     json.dump(data, file, indent=2)
+
+            return new_appointment.vaccination_signature
 
         except FileNotFoundError as ex:
             raise VaccineManagementException("patient registry file not found")
