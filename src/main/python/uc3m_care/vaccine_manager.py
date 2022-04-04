@@ -137,10 +137,10 @@ class VaccineManager:
         except FileNotFoundError as ex:
             raise VaccineManagementException("appointment request file not found")
 
-        # get appropriate json file from patient_registry.json
         systemID = apptReq["PatientSystemID"]
         phoneNumber = apptReq["ContactPhoneNumber"]
 
+        # get appropriate json file from patient_registry.json
         try:
             with open(self.patient_registry, "r", encoding="utf-8") as file:
                 patientRegistry = json.load(file)
@@ -166,6 +166,7 @@ class VaccineManager:
             if not phoneNumber == storedPhoneNumber:
                 raise VaccineManagementException("phone number does not match number in register")
 
+            # get patient guid to make appointment
             patientID = registered.patient_id()
 
             new_appointment = VaccinationAppoinment(guid=patientID,
@@ -193,7 +194,3 @@ class VaccineManager:
         except FileNotFoundError as ex:
             raise VaccineManagementException("patient registry file not found")
 
-
-        # return hex string SHA256 thing [hashlib.sha256(self.__signature_string().encode()).hexdigest()]
-        # check sha256
-        # in case of error, VaccineManagementException
