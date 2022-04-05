@@ -1,24 +1,25 @@
 """Module """
+import uuid
+import json
+import re
+from pathlib import Path
+import os
 from .vaccine_patient_register import VaccinePatientRegister
 from .vaccine_management_exception import VaccineManagementException
 from .vaccination_appoinment import VaccinationAppoinment
-import uuid
-import json
-from pathlib import Path
-import os
-
 
 class VaccineManager:
     """Class for providing the methods for managing the vaccination process"""
 
     # FOLDER FOR SAVING & READING THE JSON FILES
     # ../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
-    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
+    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
+                 "G88.2022.T16.GE3/json/db"
+    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
+                      "G88.2022.T16.GE3/json/collection"
 
     # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
     # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
-
 
     # FILES WHERE THE INFO WILL BE STORED
     patient_registry = json_store + "/patient_registry.json"
@@ -33,16 +34,15 @@ class VaccineManager:
         if not isinstance(patient_id, str):
             raise VaccineManagementException("patient_id must be a string value")
         try:
-            myUUID = uuid.UUID(patient_id)
-            import re
+            my_uuid = uuid.UUID(patient_id)
             myregex = re.compile(r'^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-'
                                  r'[0-9A-F]{12}$'
                                  , re.IGNORECASE)
-            x = myregex.fullmatch(patient_id)
-            if not x:
+            match = myregex.fullmatch(patient_id)
+            if not match:
                 raise VaccineManagementException("Invalid UUID v4 format")
-        except ValueError as e:
-            raise VaccineManagementException("Id received is not a UUID") from e
+        except ValueError as err:
+            raise VaccineManagementException("Id received is not a UUID") from err
         return True
 
     @staticmethod
@@ -63,8 +63,8 @@ class VaccineManager:
             raise VaccineManagementException("name_surname may not have leading or trailing spaces")
         try:
             name_surname.strip().index(" ")
-        except ValueError:
-            raise VaccineManagementException("name_surname must have at least one space")
+        except ValueError as err:
+            raise VaccineManagementException("name_surname must have at least one space") from err
         return True
 
     @staticmethod
@@ -110,7 +110,7 @@ class VaccineManager:
                 with open(self.patient_registry, "x", encoding="utf-8", newline="") as file:
                     data = [self.__dict__]
                     json.dump(data, file, indent=2)
-            except FileExistsError as ex:
+            except FileExistsError:
                 # if file exists, load the data, append the new item and save it all
                 with open(self.patient_registry, "r",
                           encoding="utf-8") as file:
@@ -127,42 +127,46 @@ class VaccineManager:
     def get_vaccine_date(self, input_file):
         # read input file
         try:
-            with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+            with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
+                      input_file, "r", encoding="utf-8") as file:
             # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
-                apptReq = json.load(file)
+                appt_request = json.load(file)
         except json.decoder.JSONDecodeError as ex:
-            raise VaccineManagementException("appointment request file has invalid JSON format")
+            raise VaccineManagementException("appointment request file has invalid JSON format") from ex
 
-        if not apptReq:
+        if not appt_request:
             raise VaccineManagementException("appointment request empty")
 
+        # check that system_id and phone_number are valid keys
         try:
-            systemID = apptReq["PatientSystemID"]
-        except:
-            raise VaccineManagementException("PatientSystemID key missing")
+            system_id = appt_request["PatientSystemID"]
+        except KeyError as ex:
+            raise VaccineManagementException("PatientSystemID key missing") from ex
 
         try:
-            phoneNumber = apptReq["ContactPhoneNumber"]
-        except:
-            raise VaccineManagementException("ContactPhoneNumber key missing")
+            phone_number = appt_request["ContactPhoneNumber"]
+        except KeyError as ex:
+            raise VaccineManagementException("ContactPhoneNumber key missing") from ex
 
-        if not isinstance(systemID, str):
-            raise VaccineManagementException("SystemID must be a string")
-        if not len(systemID) == 32:
-            raise VaccineManagementException("SystemID must be 32 characters long")
-        if not systemID.isalnum():
-            raise VaccineManagementException("SystemID must only contain hexadecimals")
+        # check validity of system_id
+        if not isinstance(system_id, str):
+            raise VaccineManagementException("system_id must be a string")
+        if not len(system_id) == 32:
+            raise VaccineManagementException("system_id must be 32 characters long")
+        if not system_id.isalnum():
+            raise VaccineManagementException("system_id must only contain hexadecimals")
 
-        self.validate_phone_number(phoneNumber)
+        # check validity of phone_number
+        self.validate_phone_number(phone_number)
 
         # get appropriate json file from patient_registry.json
         try:
             with open(self.patient_registry, "r", encoding="utf-8") as file:
-                patientRegistry = json.load(file)
-            patientFound = False
-            for patient in patientRegistry:
-                if systemID == patient["_VaccinePatientRegister__patient_system_id"]:
-                    patientFound = True
+                patient_registry = json.load(file)
+            patient_found = False
+            for patient in patient_registry:
+                if system_id == patient["_VaccinePatientRegister__patient_system_id"]:
+                    patient_found = True
                     registered = VaccinePatientRegister(patient_id=patient["_VaccinePatientRegister__patient_id"],
                                                         registration_type=patient[
                                                             "_VaccinePatientRegister__registration_type"],
@@ -170,23 +174,22 @@ class VaccineManager:
                                                         phone_number=patient["_VaccinePatientRegister__phone_number"],
                                                         age=patient["_VaccinePatientRegister__age"])
 
-            if not patientFound:
+            if not patient_found:
                 raise VaccineManagementException("patient not found in registry")
-
-            # generate sha256 with hexdigest from patient data, compare to stored sha256 (patient system id)
-            storedSystemID = registered.patient_system_id
-            storedPhoneNumber = registered.phone_number
-            if not systemID == storedSystemID:
+                # generate sha256 with hexdigest from patient data, compare to stored sha256 (patient system id)
+            stored_system_id = registered.patient_system_id
+            stored_phone_number = registered.phone_number
+            if not system_id == stored_system_id:
                 raise VaccineManagementException("system ID does not match data stored in register")
-            if not phoneNumber == storedPhoneNumber:
+            if not phone_number == stored_phone_number:
                 raise VaccineManagementException("phone number does not match number in register")
 
             # get patient guid to make appointment
-            patientID = registered.patient_id
+            patient_id = registered.patient_id
 
-            new_appointment = VaccinationAppoinment(guid=patientID,
-                                                    patient_sys_id= systemID,
-                                                    patient_phone_number=phoneNumber,
+            new_appointment = VaccinationAppoinment(guid=patient_id,
+                                                    patient_sys_id= system_id,
+                                                    patient_phone_number=phone_number,
                                                     days=10)
 
             # add appointment to file, creating the file first if necessary
@@ -195,7 +198,7 @@ class VaccineManager:
                 with open(self.vaccination_appointments, "x", encoding="utf-8", newline="") as file:
                     data = [self.__dict__]
                     json.dump(data, file, indent=2)
-            except FileExistsError as ex:
+            except FileExistsError:
                 # if file exists, load the data, append the new item and save it all
                 with open(self.vaccination_appointments, "r", encoding="utf-8") as file:
                     # LOAD THE DATA
@@ -209,5 +212,4 @@ class VaccineManager:
             return new_appointment.vaccination_signature
 
         except FileNotFoundError as ex:
-            raise VaccineManagementException("patient registry file not found")
-
+            raise VaccineManagementException("patient registry file not found") from ex
