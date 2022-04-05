@@ -7,14 +7,5 @@
     "_VaccinePatientRegister__age": 21,
     "_VaccinePatientRegister__time_stamp": 1646325827.425465,
     "_VaccinePatientRegister__patient_system_id": "2e7ba4f8fc1936352c06a3f200720546"
-  },
-  {
-    "_VaccinePatientRegister__patient_id": "bf4d3481-12ff-4093-a6ff-a295fdfe7af1",
-    "_VaccinePatientRegister__full_name": "BRAD SMITH",
-    "_VaccinePatientRegister__registration_type": "REGULAR",
-    "_VaccinePatientRegister__phone_number": "+34987654321",
-    "_VaccinePatientRegister__age": 50,
-    "_VaccinePatientRegister__time_stamp": 1646325827.425465,
-    "_VaccinePatientRegister__patient_system_id": "25863e2c8ba73f9b15111653fe03fda9"
   }
 ]

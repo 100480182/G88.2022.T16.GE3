@@ -32,10 +32,11 @@ class VaccineManager:
 
     @staticmethod
     def validate_guid(patient_id):
+        """validates guid"""
         if not isinstance(patient_id, str):
             raise VaccineManagementException("patient_id must be a string value")
         try:
-            my_uuid = uuid.UUID(patient_id)
+            uuid.UUID(patient_id)
             myregex = re.compile(r'^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-'
                                  r'[0-9A-F]{12}$'
                                  , re.IGNORECASE)
@@ -48,20 +49,22 @@ class VaccineManager:
 
     @staticmethod
     def validate_reg_type(registration_type):
+        """validates registration_type"""
         if not isinstance(registration_type, str):
             raise VaccineManagementException("registration_type must be a string value")
         if not (registration_type.upper() == "REGULAR" or registration_type.upper() == "FAMILY"):
-            raise VaccineManagementException("registration_type must be either \"REGULAR\" or \"FAMILY\"")
+            raise VaccineManagementException("registration_type must be REGULAR or FAMILY")
         return True
 
     @staticmethod
     def validate_name(name_surname):
+        """validates name_surname"""
         if not isinstance(name_surname, str):
             raise VaccineManagementException("name_surname must be a string value")
         if len(name_surname) > 30:
             raise VaccineManagementException("name_surname must be 30 characters or less")
         if name_surname.strip() != name_surname:
-            raise VaccineManagementException("name_surname may not have leading or trailing spaces")
+            raise VaccineManagementException("name_surname can't have spaces at beginning or end")
         try:
             name_surname.strip().index(" ")
         except ValueError as err:
@@ -70,6 +73,7 @@ class VaccineManager:
 
     @staticmethod
     def validate_phone_number(phone_number):
+        """validates phone_number"""
         if not isinstance(phone_number, str):
             raise VaccineManagementException("phone_number must be a string")
         if not len(phone_number) == 12:
@@ -82,6 +86,7 @@ class VaccineManager:
 
     @staticmethod
     def validate_age(age):
+        """validates age"""
         if not isinstance(age, int):
             raise VaccineManagementException("age must be an integer")
         if age > 125:
@@ -90,13 +95,13 @@ class VaccineManager:
             raise VaccineManagementException("age must be 6 and older")
         return True
 
-
     def request_vaccination_id(self,
                                patient_id,
                                registration_type,
                                name_surname,
                                phone_number,
                                age):
+        """registers patient into patient_registry and returns the SHA 256 System ID"""
         if self.validate_guid(patient_id) and self.validate_reg_type(registration_type) and \
                 self.validate_name(name_surname) and self.validate_phone_number(phone_number) and \
                 self.validate_age(age):
@@ -126,14 +131,19 @@ class VaccineManager:
             return my_reg.patient_system_id
 
     def get_vaccine_date(self, input_file):
+        """takes patient system ID,
+           confirms data in patient_registry,
+           and adds patient to vaccination_appointments"""
         # read input file
         try:
-            with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
+            with open("/Users/davidatwood/Documents/studyabroad/" +
+                      "softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
                       input_file, "r", encoding="utf-8") as file:
-            # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+            # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" +
+            # input_file, "r", encoding="utf-8") as file:
                 appt_request = json.load(file)
         except json.decoder.JSONDecodeError as ex:
-            raise VaccineManagementException("appointment request file has invalid JSON format") from ex
+            raise VaccineManagementException("appointment request file is not JSON") from ex
 
         if not appt_request:
             raise VaccineManagementException("appointment request empty")
@@ -143,7 +153,6 @@ class VaccineManager:
             system_id = appt_request["PatientSystemID"]
         except KeyError as ex:
             raise VaccineManagementException("PatientSystemID key missing") from ex
-
         try:
             phone_number = appt_request["ContactPhoneNumber"]
         except KeyError as ex:
@@ -168,16 +177,16 @@ class VaccineManager:
             for patient in patient_registry:
                 if system_id == patient["_VaccinePatientRegister__patient_system_id"]:
                     patient_found = True
-                    registered = VaccinePatientRegister(patient_id=patient["_VaccinePatientRegister__patient_id"],
-                                                        registration_type=patient[
-                                                            "_VaccinePatientRegister__registration_type"],
-                                                        full_name=patient["_VaccinePatientRegister__full_name"],
-                                                        phone_number=patient["_VaccinePatientRegister__phone_number"],
-                                                        age=patient["_VaccinePatientRegister__age"])
+                    registered = VaccinePatientRegister(
+                        patient_id=patient["_VaccinePatientRegister__patient_id"],
+                        registration_type=patient["_VaccinePatientRegister__registration_type"],
+                        full_name=patient["_VaccinePatientRegister__full_name"],
+                        phone_number=patient["_VaccinePatientRegister__phone_number"],
+                        age=patient["_VaccinePatientRegister__age"])
 
             if not patient_found:
                 raise VaccineManagementException("patient not found in registry")
-                # generate sha256 with hexdigest from patient data, compare to stored sha256 (patient system id)
+                # generate sha256 with hexdigest from patient data, compare to stored sha256
             stored_system_id = registered.patient_system_id
             stored_phone_number = registered.phone_number
             if not system_id == stored_system_id:
@@ -189,7 +198,7 @@ class VaccineManager:
             patient_id = registered.patient_id
 
             new_appointment = VaccinationAppoinment(guid=patient_id,
-                                                    patient_sys_id= system_id,
+                                                    patient_sys_id=system_id,
                                                     patient_phone_number=phone_number,
                                                     days=10)
 
@@ -217,6 +226,9 @@ class VaccineManager:
 
 
     def vaccine_patient(self, date_signature):
+        """takes signature, confirms data is in vaccination_appointments,
+           and adds patient to vaccine_administration list.
+           returns True if patient is found"""
         if not re.search('[0-9a-fA-F]{64}', date_signature):
             raise VaccineManagementException("date_signature is invalid")
 
@@ -226,7 +238,7 @@ class VaccineManager:
         except FileNotFoundError as ex:
             raise VaccineManagementException("vaccination_appointments file not found") from ex
         except json.JSONDecodeError as ex:
-            raise VaccineManagementException("vaccination_appointments file is not in valid JSON format") from ex
+            raise VaccineManagementException("vaccination_appointments file is not JSON") from ex
 
         match = False
         for appointment in appointments:
@@ -237,7 +249,8 @@ class VaccineManager:
             raise VaccineManagementException("date_signature not found in vaccination_appointments")
 
         now = datetime.utcnow()
-        new_administration = {"VaccinationSignature": date_signature, "Timestamp": datetime.timestamp(now)}
+        new_administration = {"VaccinationSignature": date_signature,
+                              "Timestamp": datetime.timestamp(now)}
         # add administration to file, creating the file first if necessary
         try:
             # if file does not exist store the first item
