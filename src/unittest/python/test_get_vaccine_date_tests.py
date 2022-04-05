@@ -597,7 +597,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual("phone_number must be 9 digits", cm.exception.message)
 
     def test_vaccine_date_node42_delete(self):
-        """testing when node 42 (Number) is duplicated"""
+        """testing when node 42 (Number) is deleted"""
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
             test_file = "node42_delete.json"
