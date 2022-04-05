@@ -3,12 +3,10 @@ import json
 import os
 from uc3m_care import VaccineManager
 from uc3m_care import VaccineManagementException
-from uc3m_care import VaccinationAppoinment
 from test_utils import TestUtils
 
 class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, True)
+    """test file for vaccine_patient()"""
 
     @classmethod
     def setUpClass(cls) -> None:
@@ -47,13 +45,15 @@ class MyTestCase(unittest.TestCase):
         self.age3 = 39
         self.setUpClass()
 
-    def test_vaccine_patient_1_2_F(self):
+    def test_vaccine_patient_1_2(self):
+        """testing error path"""
         with self.assertRaises(VaccineManagementException) as err:
             my_manager = VaccineManager()
             my_manager.vaccine_patient("123")
         self.assertEqual("date_signature is invalid", err.exception.message)
 
-    def test_vaccine_patient_1_3_5_F(self):
+    def test_vaccine_patient_1_3_5(self):
+        """testing error path"""
         with self.assertRaises(VaccineManagementException) as err:
             my_manager = VaccineManager()
             my_manager.request_vaccination_id(patient_id=self.patient_id,
@@ -62,11 +62,14 @@ class MyTestCase(unittest.TestCase):
                                               phone_number=self.phone_number,
                                               age=self.age)
             signature = my_manager.get_vaccine_date("valid.json")
+            print(signature)
             my_manager.vaccination_appointments = "epicfail"
             my_manager.vaccine_patient(signature)
+
         self.assertEqual("vaccination_appointments file not found", err.exception.message)
 
-    def test_vaccine_patient_1_3_4_6_F(self):
+    def test_vaccine_patient_1_3_4_6(self):
+        """testing error path"""
         with self.assertRaises(VaccineManagementException) as err:
             my_manager = VaccineManager()
             my_manager.request_vaccination_id(patient_id=self.patient_id,
@@ -76,13 +79,13 @@ class MyTestCase(unittest.TestCase):
                                               age=self.age)
             signature = my_manager.get_vaccine_date("valid.json")
             # overwrite vaccine_appointments file so not valid json format
-            with open(my_manager.vaccination_appointments, 'w') as file:
+            with open(my_manager.vaccination_appointments, 'w', encoding="utf-8") as file:
                 file.write("&")
-            # NEED TO HAVE THIS ^^ W/O MESSING UP REST OF TESTS
             my_manager.vaccine_patient(signature)
-        self.assertEqual("vaccination_appointments file is not in valid JSON format", err.exception.message)
+        self.assertEqual("vaccination_appointments file is not JSON", err.exception.message)
 
-    def test_vaccine_patient_1_3_4_7_9_10_F(self):
+    def test_vaccine_patient_1_3_4_7_9_10(self):
+        """testing error path"""
         with self.assertRaises(VaccineManagementException) as err:
             my_manager = VaccineManager()
             my_manager.request_vaccination_id(patient_id=self.patient_id,
@@ -93,10 +96,10 @@ class MyTestCase(unittest.TestCase):
             signature = my_manager.get_vaccine_date("valid.json")
             TestUtils.clear_json_file(my_manager.vaccination_appointments)
             my_manager.vaccine_patient(signature)
-        self.assertEqual("date_signature not found in vaccination_appointments", err.exception.message)
+        self.assertEqual("date_signature not found", err.exception.message)
 
-
-    def test_vaccine_patient_1_3_4_7_8_7_9_10_F(self):
+    def test_vaccine_patient_1_3_4_7_8_7_9_10(self):
+        """testing error path"""
         with self.assertRaises(VaccineManagementException) as err:
             my_manager = VaccineManager()
             # register three patients
@@ -123,18 +126,19 @@ class MyTestCase(unittest.TestCase):
             with open(my_manager.vaccination_appointments, "r", encoding="utf-8") as file:
                 data = json.load(file)
                 for i in range(len(data)):
-                    if data[i]["_VaccinationAppoinment__patient_id"] == "e19cca80-bb93-42aa-ab0f-780b0caa7d46":
+                    if data[i]["_VaccinationAppoinment__patient_id"] == \
+                            "e19cca80-bb93-42aa-ab0f-780b0caa7d46":
                         data.pop(i)
                         break
-            with open(my_manager.vaccination_appointments, 'w') as file:
+            with open(my_manager.vaccination_appointments, 'w', encoding="utf-8") as file:
                 json.dump(data, file)
 
             # run the method for an error
             my_manager.vaccine_patient(signature)
-        self.assertEqual("date_signature not found in vaccination_appointments", err.exception.message)
+        self.assertEqual("date_signature not found", err.exception.message)
 
-    def test_vaccine_patient_1_3_4_7_9_11_12_14_15_F(self):
-        # valid, just the vaccination_administration file doesn't exist
+    def test_vaccine_patient_1_3_4_7_9_11_12_14_15(self):
+        """testing valid path, but the vaccination_administration file doesn't exist"""
         my_manager = VaccineManager()
         my_manager.request_vaccination_id(patient_id=self.patient_id,
                                           registration_type=self.registration_type,
@@ -146,8 +150,8 @@ class MyTestCase(unittest.TestCase):
         res = my_manager.vaccine_patient(signature)
         self.assertEqual(True, res)
 
-    def test_vaccine_patient_1_3_4_7_8_7_9_11_12_14_15_F(self):
-        # valid, just the vaccine_administration file doesn't exist with a loop
+    def test_vaccine_patient_1_3_4_7_8_7_9_11_12_14_15(self):
+        """testing valid path WITH LOOP, but the vaccination_administration file doesn't exist"""
         my_manager = VaccineManager()
         my_manager.request_vaccination_id(patient_id=self.patient_id,
                                           registration_type=self.registration_type,
@@ -166,8 +170,8 @@ class MyTestCase(unittest.TestCase):
         res = my_manager.vaccine_patient(signature)
         self.assertEqual(True, res)
 
-    def test_vaccine_patient_1_3_4_7_9_11_12_13_15_F(self):
-        # valid, vaccine_administration does exist
+    def test_vaccine_patient_1_3_4_7_9_11_12_13_15(self):
+        """testing valid path, and the vaccination_administration file exists"""
         my_manager = VaccineManager()
         my_manager.request_vaccination_id(patient_id=self.patient_id,
                                           registration_type=self.registration_type,
@@ -177,10 +181,9 @@ class MyTestCase(unittest.TestCase):
         signature = my_manager.get_vaccine_date("valid.json")
         res = my_manager.vaccine_patient(signature)
         self.assertEqual(True, res)
-        pass
 
-    def test_vaccine_patient_1_3_4_7_8_7_9_11_12_13_15_F(self):
-        # valid, vaccine_administration does exist with a loop
+    def test_vaccine_patient_1_3_4_7_8_7_9_11_12_13_15(self):
+        """testing valid path WITH LOOP, and the vaccination_administration file exists"""
         my_manager = VaccineManager()
         my_manager.request_vaccination_id(patient_id=self.patient_id,
                                           registration_type=self.registration_type,
@@ -196,8 +199,6 @@ class MyTestCase(unittest.TestCase):
         signature = my_manager.get_vaccine_date("valid.json")
         res = my_manager.vaccine_patient(signature)
         self.assertEqual(True, res)
-
-
 
 
 if __name__ == '__main__':

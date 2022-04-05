@@ -301,7 +301,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual("age must be 6 and older", ex.exception.message)
 
     def test_request_vaccine_age_ecnv19(self):
-        """testing invalid phone number"""
+        """testing invalid age"""
         with self.assertRaises(VaccineManagementException) as ex:
             my_manager = VaccineManager()
             # AGE greater than 125
@@ -314,7 +314,7 @@ class MyTestCase(unittest.TestCase):
         self.assertEqual("age must not exceed 125", ex.exception.message)
 
     def test_request_vaccine_age_ecnv20(self):
-        """testing invalid phone number"""
+        """testing invalid age"""
         with self.assertRaises(VaccineManagementException) as ex:
             my_manager = VaccineManager()
             # AGE is not an integer

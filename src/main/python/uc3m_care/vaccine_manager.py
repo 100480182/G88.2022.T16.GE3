@@ -129,6 +129,7 @@ class VaccineManager:
                     json.dump(data, file, indent=2)
 
             return my_reg.patient_system_id
+        raise VaccineManagementException("error")
 
     def get_vaccine_date(self, input_file):
         """takes patient system ID,
@@ -246,7 +247,7 @@ class VaccineManager:
                 match = True
 
         if not match:
-            raise VaccineManagementException("date_signature not found in vaccination_appointments")
+            raise VaccineManagementException("date_signature not found")
 
         now = datetime.utcnow()
         new_administration = {"VaccinationSignature": date_signature,
