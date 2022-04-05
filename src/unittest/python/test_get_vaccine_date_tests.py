@@ -71,7 +71,17 @@ class MyTestCase(unittest.TestCase):
             res = my_manager.get_vaccine_date(test_file)
         self.assertEqual("appointment request file empty", cm.exception.message)
 
-
+    def test_vaccine_date_node1_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            my_manager.request_vaccination_id(patient_id=self.patient_id,
+                                              registration_type=self.registration_type,
+                                              name_surname=self.name_surname,
+                                              phone_number=self.phone_number,
+                                              age=self.age)
+            test_file = "node1_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file empty", cm.exception.message)
 
 if __name__ == '__main__':
     unittest.main()
