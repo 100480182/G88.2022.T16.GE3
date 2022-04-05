@@ -13,11 +13,11 @@ class VaccineManager:
 
     # FOLDER FOR SAVING & READING THE JSON FILES
     # ../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    #json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
-    #json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
+    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/db"
+    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/json/collection"
 
-    json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
-    json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
+    # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
+    # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
 
 
     # FILES WHERE THE INFO WILL BE STORED
@@ -129,16 +129,14 @@ class VaccineManager:
     def get_vaccine_date(self, input_file):
         # read input file
         try:
-            #with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
-            with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+            with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
+            # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
                 apptReq = json.load(file) # CAN THROW EXCEPTION!!
-
-
             # check valid format
-            # if not apptReq:
-            #     raise VaccineManagementException("appointment request file empty")
-        except json.decoder.JSONDecodeError as ex:
-            raise VaccineManagementException("appointment request file empty")
+            if not apptReq:
+                raise VaccineManagementException("appointment request file empty")
+        except FileNotFoundError as ex:
+            raise VaccineManagementException("appointment request file not found")
 
         systemID = apptReq["PatientSystemID"]
         phoneNumber = apptReq["ContactPhoneNumber"]
