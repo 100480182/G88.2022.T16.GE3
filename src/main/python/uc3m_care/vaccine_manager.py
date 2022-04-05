@@ -1,4 +1,5 @@
 """Module """
+from datetime import datetime
 import uuid
 import json
 import re
@@ -213,3 +214,45 @@ class VaccineManager:
 
         except FileNotFoundError as ex:
             raise VaccineManagementException("patient registry file not found") from ex
+
+
+    def vaccine_patient(self, date_signature):
+        if not re.search('[0-9a-fA-F]{64}', date_signature):
+            raise VaccineManagementException("date_signature is invalid")
+
+        try:
+            with open(self.vaccination_appointments, "r", encoding="utf-8") as file:
+                appointments = json.load(file)
+        except FileNotFoundError as ex:
+            raise VaccineManagementException("vaccination_appointments file not found") from ex
+        except json.JSONDecodeError as ex:
+            raise VaccineManagementException("vaccination_appointments file is not in valid JSON format") from ex
+
+        match = False
+        for appointment in appointments:
+            if date_signature == appointment["_VaccinationAppoinment__vaccination_signature"]:
+                match = True
+
+        if not match:
+            raise VaccineManagementException("date_signature not found in vaccination_appointments")
+
+        now = datetime.utcnow()
+        new_administration = {"VaccinationSignature": date_signature, "Timestamp": datetime.timestamp(now)}
+        # add administration to file, creating the file first if necessary
+        try:
+            # if file does not exist store the first item
+            with open(self.vaccination_administration, "x", encoding="utf-8", newline="") as file:
+                data = [self.__dict__]
+                json.dump(data, file, indent=2)
+        except FileExistsError:
+            # if file exists, load the data, append the new item and save it all
+            with open(self.vaccination_administration, "r", encoding="utf-8") as file:
+                # LOAD THE DATA
+                data = json.load(file)
+                # APPEND THE NEW ADMINISTRATION
+                data.append(new_administration)
+            # Overwrite the data
+            with open(self.vaccination_administration, "w", encoding="utf-8", newline="") as file:
+                json.dump(data, file, indent=2)
+
+        return match

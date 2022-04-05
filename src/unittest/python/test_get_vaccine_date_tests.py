@@ -346,14 +346,14 @@ class MyTestCase(unittest.TestCase):
             my_manager = VaccineManager()
             test_file = "node22_delete.json"
             my_manager.get_vaccine_date(test_file)
-        self.assertEqual("SystemID must be 32 characters long", err.exception.message)
+        self.assertEqual("system_id must be 32 characters long", err.exception.message)
 
     def test_vaccine_date_node22_duplicate(self):
         with self.assertRaises(VaccineManagementException) as err:
             my_manager = VaccineManager()
             test_file = "node22_duplicate.json"
             my_manager.get_vaccine_date(test_file)
-        self.assertEqual("SystemID must be 32 characters long", err.exception.message)
+        self.assertEqual("system_id must be 32 characters long", err.exception.message)
 
     def test_vaccine_date_node23_delete(self):
         with self.assertRaises(VaccineManagementException) as err:
@@ -493,7 +493,7 @@ class MyTestCase(unittest.TestCase):
             my_manager = VaccineManager()
             test_file = "node35_modify.json"
             my_manager.get_vaccine_date(test_file)
-        self.assertEqual("SystemID must be 32 characters long", err.exception.message)
+        self.assertEqual("system_id must be 32 characters long", err.exception.message)
 
     def test_vaccine_date_node36_modify(self):
         with self.assertRaises(VaccineManagementException) as err:
