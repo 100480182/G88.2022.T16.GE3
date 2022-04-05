@@ -35,6 +35,7 @@ class MyTestCase(unittest.TestCase):
         self.age = 21
 
     def test_vaccine_date_valid(self):
+        """testing when the json file is valid and error free"""
         my_manager = VaccineManager()
         my_manager.request_vaccination_id(patient_id=self.patient_id,
                                           registration_type=self.registration_type,
