@@ -133,10 +133,10 @@ class VaccineManager:
             # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
                 apptReq = json.load(file) # CAN THROW EXCEPTION!!
             # check valid format
-            if not apptReq:
-                raise VaccineManagementException("appointment request file empty")
-        except FileNotFoundError as ex:
-            raise VaccineManagementException("appointment request file not found")
+            # if not apptReq:
+            #     raise VaccineManagementException("appointment request file empty")
+        except json.decoder.JSONDecodeError as ex:
+            raise VaccineManagementException("appointment request file empty")
 
         systemID = apptReq["PatientSystemID"]
         phoneNumber = apptReq["ContactPhoneNumber"]
