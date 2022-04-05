@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_request_vaccine_tests.MyTestCase-20220405235509" tests="22" file="test_request_vaccine_tests.py" time="0.025" timestamp="2022-04-05T23:55:09" failures="0" errors="0" skipped="0">
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_age_ecnv18" time="0.002" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_age_ecnv19" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_age_ecnv20" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_ecv1" time="0.002" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_ecv2" time="0.002" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_name_ecnv10" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_name_ecnv11" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_name_ecnv12" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_name_ecnv8" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_name_ecnv9" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_patient_id_ecnv1" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_patient_id_ecnv2" time="0.002" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_patient_id_ecnv3" time="0.002" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_patient_id_ecnv4" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_phone_number_ecnv13" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_phone_number_ecnv14" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_phone_number_ecnv15" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_phone_number_ecnv16" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_phone_number_ecnv17" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_reg_type_ecnv5" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_reg_type_ecnv6" time="0.001" timestamp="2022-04-05T23:55:09"/>
+	<testcase classname="test_request_vaccine_tests.MyTestCase" name="test_request_vaccine_reg_type_ecnv7" time="0.001" timestamp="2022-04-05T23:55:09"/>
+</testsuite>

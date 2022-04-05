@@ -9,18 +9,19 @@ from .vaccine_patient_register import VaccinePatientRegister
 from .vaccine_management_exception import VaccineManagementException
 from .vaccination_appoinment import VaccinationAppoinment
 
+
 class VaccineManager:
     """Class for providing the methods for managing the vaccination process"""
 
     # FOLDER FOR SAVING & READING THE JSON FILES
     # ../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
-                 "G88.2022.T16.GE3/json/db"
-    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
-                      "G88.2022.T16.GE3/json/collection"
+    # json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
+    #              "G88.2022.T16.GE3/json/db"
+    # json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
+    #                   "G88.2022.T16.GE3/json/collection"
 
-    # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
-    # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
+    json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
+    json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
 
     # FILES WHERE THE INFO WILL BE STORED
     patient_registry = json_store + "/patient_registry.json"
@@ -137,11 +138,11 @@ class VaccineManager:
            and adds patient to vaccination_appointments"""
         # read input file
         try:
-            with open("/Users/davidatwood/Documents/studyabroad/" +
-                      "softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
+            # with open("/Users/davidatwood/Documents/studyabroad/" +
+            #           "softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
+            #           input_file, "r", encoding="utf-8") as file:
+            with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" +
                       input_file, "r", encoding="utf-8") as file:
-            # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" +
-            # input_file, "r", encoding="utf-8") as file:
                 appt_request = json.load(file)
         except json.decoder.JSONDecodeError as ex:
             raise VaccineManagementException("appointment request file is not JSON") from ex
@@ -224,7 +225,6 @@ class VaccineManager:
 
         except FileNotFoundError as ex:
             raise VaccineManagementException("patient registry file not found") from ex
-
 
     def vaccine_patient(self, date_signature):
         """takes signature, confirms data is in vaccination_appointments,

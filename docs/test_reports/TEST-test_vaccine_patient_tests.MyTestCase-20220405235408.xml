@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="test_vaccine_patient_tests.MyTestCase-20220405235408" tests="9" file="test_vaccine_patient_tests.py" time="0.048" timestamp="2022-04-05T23:54:08" failures="0" errors="0" skipped="0">
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_2" time="0.003" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_6" time="0.005" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_7_8_7_9_10" time="0.009" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_7_8_7_9_11_12_13_15" time="0.006" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_7_8_7_9_11_12_14_15" time="0.006" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_7_9_10" time="0.005" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_7_9_11_12_13_15" time="0.005" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_4_7_9_11_12_14_15" time="0.005" timestamp="2022-04-05T23:54:08"/>
+	<testcase classname="test_vaccine_patient_tests.MyTestCase" name="test_vaccine_patient_1_3_5" time="0.004" timestamp="2022-04-05T23:54:08"/>
+</testsuite>
