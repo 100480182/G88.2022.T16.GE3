@@ -14,13 +14,13 @@ class VaccineManager:
 
     # FOLDER FOR SAVING & READING THE JSON FILES
     # ../../.. CORRESPONDS WITH THE PROJECT MAIN FOLDER
-    json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
-                 "G88.2022.T16.GE3/json/db"
-    json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
-                      "G88.2022.T16.GE3/json/collection"
+    #json_store = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
+                # "G88.2022.T16.GE3/json/db"
+    #json_collection = "/Users/davidatwood/Documents/studyabroad/softwaredev/" \
+                    #  "G88.2022.T16.GE3/json/collection"
 
-    # json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
-    # json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
+    json_store = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/db"
+    json_collection = str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/json/collection"
 
     # FILES WHERE THE INFO WILL BE STORED
     patient_registry = json_store + "/patient_registry.json"
@@ -137,11 +137,11 @@ class VaccineManager:
            and adds patient to vaccination_appointments"""
         # read input file
         try:
-            with open("/Users/davidatwood/Documents/studyabroad/" +
-                      "softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
-                      input_file, "r", encoding="utf-8") as file:
-            # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" +
-            # input_file, "r", encoding="utf-8") as file:
+            # with open("/Users/davidatwood/Documents/studyabroad/" +
+            #           "softwaredev/G88.2022.T16.GE3/src/jsonfiles/" +
+            #           input_file, "r", encoding="utf-8") as file:
+            with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" +
+            input_file, "r", encoding="utf-8") as file:
                 appt_request = json.load(file)
         except json.decoder.JSONDecodeError as ex:
             raise VaccineManagementException("appointment request file is not JSON") from ex
