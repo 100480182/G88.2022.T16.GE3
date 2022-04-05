@@ -62,26 +62,507 @@ class MyTestCase(unittest.TestCase):
     def test_vaccine_date_node1_delete(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
-            my_manager.request_vaccination_id(patient_id=self.patient_id,
-                                              registration_type=self.registration_type,
-                                              name_surname=self.name_surname,
-                                              phone_number=self.phone_number,
-                                              age=self.age)
             test_file = "node1_delete.json"
             res = my_manager.get_vaccine_date(test_file)
-        self.assertEqual("appointment request file empty", cm.exception.message)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
 
     def test_vaccine_date_node1_duplicate(self):
         with self.assertRaises(VaccineManagementException) as cm:
             my_manager = VaccineManager()
-            my_manager.request_vaccination_id(patient_id=self.patient_id,
-                                              registration_type=self.registration_type,
-                                              name_surname=self.name_surname,
-                                              phone_number=self.phone_number,
-                                              age=self.age)
             test_file = "node1_duplicate.json"
             res = my_manager.get_vaccine_date(test_file)
-        self.assertEqual("appointment request file empty", cm.exception.message)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node2_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node2_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node2_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node2_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node3_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node3_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request empty", cm.exception.message)
+
+    def test_vaccine_date_node3_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node3_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node4_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node4_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node4_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node4_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node5_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node5_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node6_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node6_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node6_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node6_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node7_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node7_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node7_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node7_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node8_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node8_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node8_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node8_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node9_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node5_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node10_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node10_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node10_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node10_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node11_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node11_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node11_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node11_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node12_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node12_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node12_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node12_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node13_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node13_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node14_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node14_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node14_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node14_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node15_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node15_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node15_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node15_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node16_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node16_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node16_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node16_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node17_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node17_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node17_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node17_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node18_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node18_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("PatientSystemID key missing", cm.exception.message)
+
+    def test_vaccine_date_node18_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node18_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("PatientSystemID key missing", cm.exception.message)
+
+    def test_vaccine_date_node19_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node19_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node19_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node19_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node20_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node20_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node21_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node21_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node21_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node21_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node22_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node22_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("SystemID must be 32 characters long", cm.exception.message)
+
+    def test_vaccine_date_node22_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node22_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("SystemID must be 32 characters long", cm.exception.message)
+
+    def test_vaccine_date_node23_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node23_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node23_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node23_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node24_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node19_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node24_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node19_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node25_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node25_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("ContactPhoneNumber key missing", cm.exception.message)
+
+    def test_vaccine_date_node25_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node25_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("ContactPhoneNumber key missing", cm.exception.message)
+
+    def test_vaccine_date_node26_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node26_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node26_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node26_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node27_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node27_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node28_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node28_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node28_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node28_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node29_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node29_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
+    def test_vaccine_date_node29_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node29_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
+    def test_vaccine_date_node30_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node30_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node30_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node30_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node31_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node31_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node32_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node32_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("PatientSystemID key missing", cm.exception.message)
+
+    def test_vaccine_date_node33_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node33_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node34_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node34_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node35_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node35_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("SystemID must be 32 characters long", cm.exception.message)
+
+    def test_vaccine_date_node36_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node36_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node37_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node37_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node38_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node27_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node39_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node27_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node40_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node40_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node41_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node41_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
+    def test_vaccine_date_node41_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node41_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
+    def test_vaccine_date_node42_delete(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node42_delete.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
+    def test_vaccine_date_node42_duplicate(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node42_duplicate.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node43_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node43_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("appointment request file has invalid JSON format", cm.exception.message)
+
+    def test_vaccine_date_node44_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node44_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
+    def test_vaccine_date_node45_modify(self):
+        with self.assertRaises(VaccineManagementException) as cm:
+            my_manager = VaccineManager()
+            test_file = "node45_modify.json"
+            res = my_manager.get_vaccine_date(test_file)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
+
 
 if __name__ == '__main__':
     unittest.main()

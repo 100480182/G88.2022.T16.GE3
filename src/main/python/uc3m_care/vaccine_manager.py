@@ -71,10 +71,8 @@ class VaccineManager:
     def validate_phone_number(phone_number):
         if not isinstance(phone_number, str):
             raise VaccineManagementException("phone_number must be a string")
-        if len(phone_number) > 12:
-            raise VaccineManagementException("phone_number must be no more than 9 digits")
-        if len(phone_number) < 12:
-            raise VaccineManagementException("phone_number must not be shorter than 9 digits")
+        if not len(phone_number) == 12:
+            raise VaccineManagementException("phone_number must be 9 digits")
         if not phone_number[1:].isdigit():
             raise VaccineManagementException("phone_number must contain only digits")
         if phone_number[0:3] != "+34":
@@ -131,15 +129,31 @@ class VaccineManager:
         try:
             with open("/Users/davidatwood/Documents/studyabroad/softwaredev/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
             # with open(str(Path.home()) + "/PycharmProjects/G88.2022.T16.GE3/src/jsonfiles/" + input_file, "r", encoding="utf-8") as file:
-                apptReq = json.load(file) # CAN THROW EXCEPTION!!
-            # check valid format
-            # if not apptReq:
-            #     raise VaccineManagementException("appointment request file empty")
+                apptReq = json.load(file)
         except json.decoder.JSONDecodeError as ex:
-            raise VaccineManagementException("appointment request file empty")
+            raise VaccineManagementException("appointment request file has invalid JSON format")
 
-        systemID = apptReq["PatientSystemID"]
-        phoneNumber = apptReq["ContactPhoneNumber"]
+        if not apptReq:
+            raise VaccineManagementException("appointment request empty")
+
+        try:
+            systemID = apptReq["PatientSystemID"]
+        except:
+            raise VaccineManagementException("PatientSystemID key missing")
+
+        try:
+            phoneNumber = apptReq["ContactPhoneNumber"]
+        except:
+            raise VaccineManagementException("ContactPhoneNumber key missing")
+
+        if not isinstance(systemID, str):
+            raise VaccineManagementException("SystemID must be a string")
+        if not len(systemID) == 32:
+            raise VaccineManagementException("SystemID must be 32 characters long")
+        if not systemID.isalnum():
+            raise VaccineManagementException("SystemID must only contain hexadecimals")
+
+        self.validate_phone_number(phoneNumber)
 
         # get appropriate json file from patient_registry.json
         try:

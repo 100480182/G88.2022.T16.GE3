@@ -236,7 +236,7 @@ class MyTestCase(unittest.TestCase):
                                                           name_surname=self.name_surname,
                                                           phone_number=self.phone_number,
                                                           age=self.age)
-        self.assertEqual("phone_number must be no more than 9 digits", cm.exception.message)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
 
     def test_TEST_PHONE_NUMBER_ECNV15(self):
         with self.assertRaises(VaccineManagementException) as cm:
@@ -248,7 +248,7 @@ class MyTestCase(unittest.TestCase):
                                                           name_surname=self.name_surname,
                                                           phone_number=self.phone_number,
                                                           age=self.age)
-        self.assertEqual("phone_number must not be shorter than 9 digits", cm.exception.message)
+        self.assertEqual("phone_number must be 9 digits", cm.exception.message)
 
     def test_TEST_PHONE_NUMBER_ECNV16(self):
         with self.assertRaises(VaccineManagementException) as cm:
